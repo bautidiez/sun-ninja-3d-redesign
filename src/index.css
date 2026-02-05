@@ -24,7 +24,8 @@
   /* Backgrounds */
   --bg-main: #020C1F;
   /* Deep spatial background for 3D */
-  --bg-surface: #ffffff;
+  --bg-surface: #051A3B;
+  /* Dark Blue for sections/cards in Dark Mode */
   --bg-glass: rgba(255, 255, 255, 0.03);
 
   /* Text */
@@ -55,6 +56,37 @@
   --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 217, 255, 0.1);
   --shadow-neon: 0 0 15px var(--turquoise-glow);
   --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* Compatibility Variables (Mappings) */
+  --color-primary: var(--ocean-main);
+  --color-secondary: var(--coral);
+  --color-bg-section: var(--bg-surface);
+}
+
+[data-theme="light"] {
+  /* Ocean Light Palette - High-End Resort */
+  --bg-main: #F5F7FA;
+  /* Cool, sophisticated grey-white */
+  --bg-surface: #FFFFFF;
+  /* Pure White */
+  --bg-glass: rgba(255, 255, 255, 0.8);
+
+  --text-primary: #0F172A;
+  /* Slate 900 - Sharp & Professional */
+  --text-secondary: #475569;
+  /* Slate 600 */
+
+  --glass-border: 1px solid rgba(148, 163, 184, 0.2);
+  --shadow-sm: 0 2px 4px rgba(148, 163, 184, 0.1);
+  --shadow-float: 0 20px 40px -5px rgba(148, 163, 184, 0.15);
+  /* Soft, luxurious shadow */
+  --shadow-neon: 0 0 15px rgba(8, 145, 178, 0.3);
+
+  /* Refined Accents */
+  --turquoise: #0891B2;
+  /* Cyan 600 - Richer Teal */
+  --coral: #EA580C;
+  /* Orange 600 - Burnt Orange Classy Accent */
 }
 
 * {
@@ -136,6 +168,17 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-gradient-hero {
+  background: linear-gradient(180deg, #fff 0%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="light"] .text-gradient-hero {
+  background: linear-gradient(180deg, var(--ocean-main) 0%, var(--ocean-light) 100%);
 }
 
 .text-gold {

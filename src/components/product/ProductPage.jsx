@@ -1,150 +1,172 @@
-import React, { useEffect, useState } from 'react';
-import tentHeroImage from '../../assets/hero-image.jpg';
-import qualityImage from '../../assets/quality-fabric.jpg';
-import setup1 from '../../assets/setup-1.jpg';
-import setup2 from '../../assets/setup-2.jpg';
-import setup3 from '../../assets/setup-3.jpg';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useTheme } from '../layout/ThemeContext';
+import TrustBar from './TrustBar';
+import FeaturesDetailed from './FeaturesDetailed';
+import CustomerGallery from './CustomerGallery';
+import FAQAccordion from './FaqAccordion';
 
 const ProductPage = () => {
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, []);
+    const { theme } = useTheme();
+    const [selectedColor, setSelectedColor] = useState('Turquoise');
 
-    const [selectedColor, setSelectedColor] = useState('blue');
+    // Placeholder for 3D Interaction
+    const styles = {
+        container: {
+            paddingTop: '120px',
+            paddingBottom: '80px',
+            background: 'var(--bg-main)',
+            minHeight: '100vh'
+        },
+        grid: {
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '60px',
+            alignItems: 'center'
+        },
+        viewer3D: {
+            height: '600px',
+            background: theme === 'dark' ? 'radial-gradient(circle at center, #0A2463 0%, transparent 70%)' : 'radial-gradient(circle at center, #E1F5FE 0%, transparent 70%)',
+            borderRadius: 'var(--radius-lg)',
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            perspective: '1000px'
+        },
+        detailsPanel: {
+            padding: '40px',
+            borderRadius: '24px',
+            height: 'fit-content'
+        }
+    };
+
+    const colors = [
+        { name: 'Turquoise', hex: '#00D9FF' },
+        { name: 'Sunset', hex: '#FF6B6B' },
+        { name: 'Sand', hex: '#F4E7D7' },
+        { name: 'Navy', hex: '#051A3B' }
+    ];
 
     return (
-        <div style={{ background: 'var(--bg-main)', color: '#fff', minHeight: '100vh', overflowX: 'hidden' }}>
+        <div style={{ background: 'var(--bg-main)' }}>
+            <div className="container" style={styles.container}>
+                <div style={styles.grid}>
+                    {/* LEFT: 3D Viewer Placeholder */}
+                    <div style={styles.viewer3D}>
+                        {/* This image would ideally be a 3D Canvas */}
+                        <motion.img
+                            src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                            alt="Sun Ninja Tent"
+                            style={{
+                                width: '80%',
+                                borderRadius: '20px',
+                                boxShadow: 'var(--shadow-float)',
+                                cursor: 'grab'
+                            }}
+                            whileHover={{ scale: 1.05, rotateY: 10 }}
+                            transition={{ type: "spring", stiffness: 300 }}
+                        />
 
-            {/* 1. 3D HERO PRODUCT SECTION */}
-            <section style={{
-                paddingTop: '120px', paddingBottom: '80px',
-                background: 'radial-gradient(circle at 50% 0%, #1a3c75 0%, var(--bg-main) 60%)'
-            }}>
-                <div className="container" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '60px' }}>
-
-                    {/* Left: 3D Visual / Interactive Area */}
-                    <div className="animate-fade-in-up" style={{ flex: '1 1 500px', perspective: '1000px' }}>
-                        {/* 3D Tilt Card Container */}
                         <div style={{
-                            position: 'relative', width: '100%', height: '600px',
-                            borderRadius: '30px',
-                            background: `url(${tentHeroImage}) center/cover`,
-                            boxShadow: 'var(--shadow-float)',
-                            transform: 'rotateY(5deg) rotateX(2deg)', /* Static tilt for demo */
-                            transition: 'transform 0.5s ease'
+                            position: 'absolute', bottom: '30px',
+                            background: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                            backdropFilter: 'blur(10px)',
+                            padding: '10px 20px', borderRadius: '30px', fontSize: '0.9rem',
+                            color: 'var(--text-primary)',
+                            border: '1px solid var(--glass-border)'
                         }}>
-                            {/* Floating Annotations */}
-                            <div style={{ position: 'absolute', top: '20%', right: '-20px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.2)', animation: 'float 3s infinite ease-in-out' }}>
-                                ☀️ UPF 50+
-                            </div>
-                            <div style={{ position: 'absolute', bottom: '20%', left: '-20px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', padding: '10px 20px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.2)', animation: 'float 4s infinite ease-in-out', animationDelay: '1s' }}>
-                                🌬️ Wind Stable
-                            </div>
+                            Drag to Rotate 360°
                         </div>
                     </div>
 
-                    {/* Right: Glass Buy Box */}
-                    <div className="animate-fade-in-up delay-100 glass-panel" style={{
-                        flex: '1 1 450px', padding: '40px', borderRadius: '30px', position: 'relative'
-                    }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                            <span className="text-gold" style={{ fontWeight: '700', letterSpacing: '1px' }}>★ BEST SELLER</span>
-                            <span style={{ color: 'var(--turquoise)' }}>In Stock</span>
+                    {/* RIGHT: Product Details (Buy Box) */}
+                    <div className="glass-panel" style={styles.detailsPanel}>
+                        <div style={{ textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--turquoise)', fontWeight: '600', marginBottom: '10px' }}>
+                            Best Seller
                         </div>
-
-                        <h1 style={{ fontSize: '3.5rem', lineHeight: '1', marginBottom: '20px', background: 'linear-gradient(to right, #fff, #cbd5e1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                            The Sun Ninja <br /> Original.
+                        <h1 style={{ fontSize: '3rem', marginBottom: '10px', lineHeight: '1.1', color: 'var(--text-primary)' }}>
+                            Sun Ninja <br />Beach Shade
                         </h1>
-
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '20px', marginBottom: '30px' }}>
-                            <span style={{ fontSize: '2.5rem', fontWeight: '700', color: 'var(--coral)' }}>$129</span>
-                            <span style={{ fontSize: '1.2rem', textDecoration: 'line-through', opacity: 0.5 }}>$159</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '30px' }}>
+                            <span style={{ fontSize: '2rem', fontWeight: '700', color: 'var(--text-primary)' }}>$159.95</span>
+                            <span style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', textDecoration: 'line-through' }}>$199.99</span>
+                            <span style={{
+                                background: 'var(--coral)', color: 'white', padding: '4px 12px',
+                                borderRadius: '8px', fontSize: '0.9rem', fontWeight: 'bold'
+                            }}>
+                                SAVE 20%
+                            </span>
                         </div>
 
-                        {/* 3D Color Selector */}
+                        {/* Urgency Badge - CRO Boost */}
+                        <div style={{
+                            background: 'linear-gradient(90deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.02))',
+                            border: '1px solid var(--coral)',
+                            borderRadius: '12px',
+                            padding: '15px 20px',
+                            marginBottom: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px'
+                        }}>
+                            <span style={{ fontSize: '1.2rem' }}>⚡</span>
+                            <div>
+                                <div style={{ fontWeight: '700', fontSize: '0.95rem', color: 'var(--coral)' }}>
+                                    Only 12 left in stock — Order soon!
+                                </div>
+                                <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                    2,847 sold this week
+                                </div>
+                            </div>
+                        </div>
+
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '1.1rem' }}>
+                            The ultimate portable beach sanctuary. UPF50+ protection, wind-resistant sand anchors, and a setup time of under 60 seconds.
+                        </p>
+
+                        {/* Color Selector */}
                         <div style={{ marginBottom: '30px' }}>
-                            <p style={{ marginBottom: '15px', color: 'var(--text-secondary)' }}>Select Color: <span style={{ color: '#fff' }}>{selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}</span></p>
+                            <label style={{ display: 'block', marginBottom: '15px', fontWeight: '600', color: 'var(--text-primary)' }}>
+                                Select Color: <span style={{ color: 'var(--text-secondary)' }}>{selectedColor}</span>
+                            </label>
                             <div style={{ display: 'flex', gap: '15px' }}>
-                                {['blue', 'turquoise', 'coral', 'sand'].map(color => (
-                                    <button
-                                        key={color}
-                                        onClick={() => setSelectedColor(color)}
+                                {colors.map(c => (
+                                    <div
+                                        key={c.name}
+                                        onClick={() => setSelectedColor(c.name)}
                                         style={{
                                             width: '40px', height: '40px', borderRadius: '50%',
-                                            background: `var(--${color === 'blue' ? 'ocean-main' : color})`,
-                                            border: selectedColor === color ? '2px solid #fff' : '2px solid transparent',
-                                            boxShadow: selectedColor === color ? '0 0 15px var(--turquoise-glow)' : 'none',
-                                            transform: selectedColor === color ? 'scale(1.1)' : 'scale(1)',
-                                            transition: 'all 0.3s ease'
+                                            background: c.hex,
+                                            cursor: 'pointer',
+                                            border: selectedColor === c.name ? '3px solid white' : '2px solid transparent',
+                                            boxShadow: selectedColor === c.name ? '0 0 15px var(--turquoise-glow)' : 'none',
+                                            transform: selectedColor === c.name ? 'scale(1.1)' : 'scale(1)',
+                                            transition: 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
                                         }}
-                                    />
+                                    ></div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* CTA */}
-                        <button className="btn-primary" style={{ width: '100%', fontSize: '1.2rem', padding: '20px', marginBottom: '20px' }}>
-                            Add to Cart
-                        </button>
-
-                        <p style={{ textAlign: 'center', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                            🚚 Free Shipping & 30-Day Returns
-                        </p>
+                        {/* Actions */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                            <button className="btn-primary" style={{ width: '100%', fontSize: '1.1rem' }}>
+                                Add to Cart - $159.95
+                            </button>
+                            <p style={{ textAlign: 'center', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                                Free Shipping & 30-Day Returns included.
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            {/* 2. GLASSMORPHISM SPECS GRID */}
-            <section style={{ padding: '100px 0', position: 'relative' }}>
-                {/* Floating background shape */}
-                <div style={{ position: 'absolute', top: '0', right: '0', width: '500px', height: '500px', background: 'var(--ocean-light)', opacity: 0.05, borderRadius: '50%', filter: 'blur(80px)' }}></div>
-
-                <div className="container">
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
-                        {[
-                            { title: 'UPF 50+', desc: 'Blocks 98% of UV rays' },
-                            { title: 'Wind Stable', desc: 'Anchored by nature (sand)' },
-                            { title: 'Water Resistant', desc: 'Quick-dry spandex fabric' }
-                        ].map((item, i) => (
-                            <div key={i} className="glass-card" style={{ padding: '30px', borderRadius: '20px' }}>
-                                <h3 style={{ fontSize: '2rem', marginBottom: '10px', color: 'var(--turquoise)' }}>{item.title}</h3>
-                                <p style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* 3. ISOMETRIC SETUP TIMELINE */}
-            <section style={{ padding: '100px 0', background: '#020C1F' }}>
-                <div className="container">
-                    <h2 style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '80px' }}>Instant Setup.</h2>
-
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px', position: 'relative' }}>
-                        {/* Connecting Line */}
-                        <div style={{ position: 'absolute', top: '50%', left: '0', width: '100%', height: '2px', background: 'rgba(255,255,255,0.1)', zIndex: 0, display: 'none' /* hidden on mobile, logical fix needed for desktop */ }}></div>
-
-                        {[
-                            { img: setup1, step: '01', title: 'Lay Flat' },
-                            { img: setup2, step: '02', title: 'Fill Sand' },
-                            { img: setup3, step: '03', title: 'Pop Up' }
-                        ].map((item, i) => (
-                            <div key={i} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s`, position: 'relative', zIndex: 1, textAlign: 'center' }}>
-                                <div style={{
-                                    width: '100%', height: '250px', borderRadius: '20px', overflow: 'hidden', marginBottom: '30px',
-                                    boxShadow: 'var(--shadow-float)', border: '1px solid rgba(255,255,255,0.1)'
-                                }}>
-                                    <img src={item.img} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                </div>
-                                <div style={{ fontSize: '4rem', fontWeight: '800', color: 'rgba(255,255,255,0.05)', position: 'absolute', top: '-20px', left: '50%', transform: 'translateX(-50%)' }}>
-                                    {item.step}
-                                </div>
-                                <h3 style={{ fontSize: '1.5rem', color: 'var(--turquoise)' }}>{item.title}</h3>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* New CRO Components */}
+            <TrustBar />
+            <FeaturesDetailed />
+            <CustomerGallery />
+            <FAQAccordion />
 
         </div>
     );

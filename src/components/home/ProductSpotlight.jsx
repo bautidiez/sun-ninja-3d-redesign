@@ -56,7 +56,7 @@ const ProductSpotlight = ({ title, subtitle, description, image, reverse, featur
                     }}>
                         {subtitle}
                     </span>
-                    <h2 style={{ fontSize: '3rem', marginBottom: '20px', lineHeight: 1.1, color: '#fff' }}>
+                    <h2 style={{ fontSize: '3rem', marginBottom: '20px', lineHeight: 1.1, color: 'var(--text-primary)' }}>
                         {title}
                     </h2>
                     <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', marginBottom: '30px', fontWeight: '300' }}>
@@ -65,16 +65,16 @@ const ProductSpotlight = ({ title, subtitle, description, image, reverse, featur
 
                     {features && (
                         <ul style={{ marginBottom: '3rem', display: 'grid', gap: '1.2rem' }}>
-                            <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: '#444' }}>
-                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--color-bg-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)' }}>✓</div>
+                            <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: 'var(--text-secondary)' }}>
+                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0, 217, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--turquoise)' }}>✓</div>
                                 UPF 50+ Sun Protection
                             </li>
-                            <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: '#444' }}>
-                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--color-bg-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)' }}>✓</div>
+                            <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: 'var(--text-secondary)' }}>
+                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0, 217, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--turquoise)' }}>✓</div>
                                 Sand Anchor System (Wind Proof)
                             </li>
-                            <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: '#444' }}>
-                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'var(--color-bg-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-primary)' }}>✓</div>
+                            <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: 'var(--text-secondary)' }}>
+                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0, 217, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--turquoise)' }}>✓</div>
                                 Lightweight & Portable
                             </li>
                         </ul>

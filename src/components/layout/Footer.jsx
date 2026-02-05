@@ -2,8 +2,8 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer style={{ backgroundColor: 'var(--color-primary)', color: '#fff', padding: '60px 0 20px' }}>
-            <div className="container" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr', gap: '40px', marginBottom: '40px' }}>
+        <footer style={{ backgroundColor: 'var(--ocean-deep)', color: '#fff', padding: '60px 0 20px' }}>
+            <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px', marginBottom: '40px' }}>
                 <div>
                     <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>Sun Ninja</h3>
                     <p style={{ opacity: 0.8, maxWidth: '300px' }}>

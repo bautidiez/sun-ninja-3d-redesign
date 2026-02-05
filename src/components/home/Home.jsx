@@ -2,6 +2,7 @@ import React from 'react';
 import HeroSection from './HeroSection';
 import ProductSpotlight from './ProductSpotlight';
 import VersatilityGrid from './VersatilityGrid';
+import ComparisonSection from './ComparisonSection'; // New import
 import SocialProof from './SocialProof';
 import Newsletter from './Newsletter';
 import tentImage from '../../assets/product-tent-1.jpg'; // Updated
@@ -29,6 +30,8 @@ const Home = () => {
             />
 
             {/* ... other sections ... */}
+            <VersatilityGrid />
+            <ComparisonSection /> {/* Added Comparison Section */}
 
             <SocialProof />
             <Newsletter />

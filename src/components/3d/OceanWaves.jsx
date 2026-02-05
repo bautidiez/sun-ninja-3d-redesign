@@ -1,17 +1,18 @@
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTheme } from '../layout/ThemeContext';
 
-const WaveParticles = () => {
-    const count = 2000;
+const WaveParticles = ({ theme }) => {
+    const count = 5000;
     const mesh = useRef();
 
     // Create particles with random positions
     const particles = useMemo(() => {
         const temp = [];
         for (let i = 0; i < count; i++) {
-            const x = (Math.random() - 0.5) * 20; // Spread x
-            const z = (Math.random() - 0.5) * 20; // Spread z
+            const x = (Math.random() - 0.5) * 25;
+            const z = (Math.random() - 0.5) * 25;
             const y = 0;
             temp.push(x, y, z);
         }
@@ -28,13 +29,19 @@ const WaveParticles = () => {
             const x = positions[i * 3];
             const z = positions[i * 3 + 2];
 
-            // Wave formula: smooth sine waves mixed
+            // Complex wave movement
             positions[i * 3 + 1] =
-                Math.sin(x * 0.5 + time * 0.5) * 0.5 +
-                Math.cos(z * 0.3 + time * 0.3) * 0.5;
+                Math.sin(x * 0.4 + time * 0.4) * 0.6 +
+                Math.cos(z * 0.2 + time * 0.3) * 0.4;
         }
         mesh.current.geometry.attributes.position.needsUpdate = true;
     });
+
+    // Theme-based appearance
+    const isDark = theme === 'dark';
+    const color = isDark ? '#00D9FF' : '#01579b'; // Neon Cyan vs Deep Blue
+    const blending = isDark ? THREE.AdditiveBlending : THREE.NormalBlending; // Glow vs Solid
+    const opacity = isDark ? 0.8 : 0.5;
 
     return (
         <points ref={mesh}>
@@ -47,31 +54,38 @@ const WaveParticles = () => {
                 />
             </bufferGeometry>
             <pointsMaterial
-                size={0.06}
-                color="#00D9FF"
+                size={0.12}
+                color={color}
                 transparent
-                opacity={0.6}
+                opacity={opacity}
                 sizeAttenuation
-                blending={THREE.AdditiveBlending}
+                blending={blending}
+                depthWrite={false}
             />
         </points>
     );
 };
 
 const OceanWaves = () => {
+    const { theme } = useTheme();
+
     return (
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1, background: 'linear-gradient(to bottom, #051A3B, #0A2463)' }}>
-            <Canvas camera={{ position: [0, 5, 10], fov: 45 }}>
-                <fog attach="fog" args={['#051A3B', 5, 20]} />
-                <ambientLight intensity={0.5} />
-                <WaveParticles />
-            </Canvas>
-            {/* Vignette Overlay for Depth */}
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+            {/* Gradient Background - Dynamic based on theme */}
             <div style={{
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                background: 'radial-gradient(circle, transparent 40%, #020C1F 100%)',
-                pointerEvents: 'none'
+                position: 'absolute',
+                inset: 0,
+                background: theme === 'dark'
+                    ? 'radial-gradient(circle at center, #0A2463 0%, #020C1F 100%)' // Deep Ocean
+                    : 'radial-gradient(circle at center, #E0F7FA 0%, #FFFFFF 100%)', // Light Breeze
+                zIndex: -2,
+                transition: 'background 0.5s ease'
             }}></div>
+
+            <Canvas camera={{ position: [0, 6, 12], fov: 50 }}>
+                <ambientLight intensity={theme === 'dark' ? 0.8 : 1.2} />
+                <WaveParticles theme={theme} />
+            </Canvas>
         </div>
     );
 };
