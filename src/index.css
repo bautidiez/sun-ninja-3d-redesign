@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  /* --- 3D Ocean Premium Palette --- */
+
+  /* Primary Depths */
+  --ocean-deep: #051A3B;
+  /* Darker Abyss for contrast */
+  --ocean-main: #0A2463;
+  /* Standard Brand Blue */
+  --ocean-light: #3E92CC;
+  /* Suface water */
+
+  /* Highlights & Accents */
+  --turquoise: #00D9FF;
+  /* Electric Cyan - Tech/Modern feel */
+  --turquoise-glow: rgba(0, 217, 255, 0.4);
+  --coral: #FF6B6B;
+  /* Energetic CTA */
+  --coral-hover: #FF8585;
+  --sand: #F4E7D7;
+  /* Natural warmth */
+
+  /* Backgrounds */
+  --bg-main: #020C1F;
+  /* Deep spatial background for 3D */
+  --bg-surface: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.03);
+
+  /* Text */
+  --text-primary: #FFFFFF;
+  /* Default to light on dark for modern feel */
+  --text-secondary: #94A3B8;
+  --text-dark: #1E293B;
+  /* For white cards */
+
+  /* Gradients */
+  --gradient-ocean: linear-gradient(135deg, var(--ocean-deep) 0%, var(--ocean-main) 100%);
+  --gradient-glow: linear-gradient(90deg, var(--turquoise) 0%, #4facfe 100%);
+  --gradient-gold: linear-gradient(45deg, #FFD700 0%, #FDB931 100%);
+
+  /* Typography */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-accent: 'Lora', serif;
+
+  /* Spacing & Shapes */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+
+  /* 3D Shadows & Glows */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-float: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 217, 255, 0.1);
+  --shadow-neon: 0 0 15px var(--turquoise-glow);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-main);
+  /* Default to dark mode for 3D pop */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: var(--font-heading);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* --- Glassmorphism Utilities --- */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: var(--glass-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: var(--shadow-float);
+  border-color: rgba(0, 217, 255, 0.3);
+}
+
+/* --- Typography Utilities --- */
+
+.text-gradient {
+  background: var(--gradient-glow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* --- Layout Utilities --- */
+.container {
+  max-width: 1400px;
+  /* Wider for modern look */
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* --- Buttons --- */
+.btn-primary {
+  background: var(--coral);
+  color: #fff;
+  padding: 16px 40px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary:hover {
+  background: var(--coral-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+}
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 16px 40px;
+  border-radius: var(--radius-full);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #fff;
+}
+
+/* --- Animations --- */
+.animate-fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
