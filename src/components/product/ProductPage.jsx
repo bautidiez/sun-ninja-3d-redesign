@@ -97,12 +97,36 @@ const ProductPage = ({ addToCart }) => {
 
     return (
         <div style={{ background: 'var(--bg-main)', paddingTop: '80px', minHeight: '100vh' }}>
-            <div className="container" style={{
+            <style>{`
+                .product-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                    gap: 60px;
+                    background: ${theme === 'dark' ? 'radial-gradient(circle at center, #0A2463 0%, transparent 70%)' : 'radial-gradient(circle at center, #E1F5FE 0%, transparent 70%)'};
+                    border-radius: var(--radius-lg);
+                    position: relative;
+                    justify-content: center;
+                    align-items: center;
+                    perspective: 1000px;
+                }
+                @media (max-width: 768px) {
+                    .product-grid {
+                        grid-template-columns: 1fr; /* Stack vertically */
+                        gap: 30px;
+                        background: none; /* Cleaner look on mobile */
+                    }
+                    .product-page-container {
+                        padding-top: 0 !important;
+                    }
+                }
+            `}</style>
+
+            <div className="container product-page-container" style={{
                 paddingBottom: '80px',
                 ...styles.container,
-                paddingTop: '20px' // Consolidated padding
+                paddingTop: '20px'
             }}>
-                <div style={styles.grid}>
+                <div className="product-grid">
                     {/* LEFT: 3D Viewer */}
                     {/* LEFT: Image Carousel */}
                     <div className="product-image-container" style={{ position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: 'var(--shadow-lg)', aspectRatio: '1/1', background: '#fff' }}>

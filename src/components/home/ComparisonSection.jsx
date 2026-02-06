@@ -19,7 +19,7 @@ const ComparisonSection = () => {
 
     return (
         <section style={{
-            padding: '100px 0',
+            padding: 'clamp(60px, 10vw, 100px) 0', // Responsive padding
             background: theme === 'dark'
                 ? 'linear-gradient(180deg, var(--bg-main) 0%, var(--ocean-deep) 100%)'
                 : 'linear-gradient(180deg, #F5F7FA 0%, #E1F5FE 100%)',
@@ -37,7 +37,7 @@ const ComparisonSection = () => {
 
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', // Reduced min-width for mobile
                     gap: '40px',
                     textAlign: 'center'
                 }}>
