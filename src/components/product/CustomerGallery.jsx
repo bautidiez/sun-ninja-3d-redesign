@@ -42,7 +42,7 @@ const CustomerGallery = () => {
                             <AnimatedCounter
                                 value={9427}
                                 duration={2500}
-                                color={theme === 'dark' ? '#FFFFFF' : 'var(--text-primary)'}
+                                color={theme === 'dark' ? '#FFFFFF' : '#000000'}
                             />
                         </div>
                         <span style={{ color: 'var(--text-primary)' }}>beach days saved</span>
