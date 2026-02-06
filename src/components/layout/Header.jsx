@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion'; // Added Framer Motion
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from './ThemeContext';
 import logo from '../../assets/Sun_Ninja_Logo_White.svg';
 
 const Header = ({ cartCount, onCartClick }) => {
     const { theme, toggleTheme } = useTheme();
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile Menu State
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
     const isHome = location.pathname === '/';
 
@@ -19,12 +20,19 @@ const Header = ({ cartCount, onCartClick }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close mobile menu on route change
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
 
-    // Helper to determine styles based on Theme + Route + Scroll
+    // Prevent body scroll when menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+    }, [isMobileMenuOpen]);
+
     const isLightMode = theme === 'light';
 
     const textColor = isLightMode && (isScrolled || !isHome)
@@ -67,126 +75,101 @@ const Header = ({ cartCount, onCartClick }) => {
     );
 
     return (
-        <nav style={{
-            position: 'fixed',
-            top: 0, left: 0, right: 0,
-            zIndex: 1000,
-            padding: '1rem 0',
-            transition: 'all 0.3s ease',
-            backgroundColor: navBg,
-            backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-            boxShadow: isScrolled ? 'var(--shadow-sm)' : 'none',
-            color: textColor
-        }}>
-            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                {/* Logo */}
-                <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', zIndex: 1100 }}> {/* High z-index for mobile */}
-                    <img src={logo} alt="Sun Ninja" style={{ height: '40px', filter: logoFilter }} />
-                </Link>
+        <>
+            <nav style={{
+                position: 'fixed',
+                top: 0, left: 0, right: 0,
+                zIndex: 1000,
+                padding: '1rem 0',
+                transition: 'all 0.3s ease',
+                backgroundColor: navBg,
+                backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+                boxShadow: isScrolled ? 'var(--shadow-sm)' : 'none',
+                color: textColor
+            }}>
+                <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center', zIndex: 1100 }}>
+                        <img src={logo} alt="Sun Ninja" style={{ height: '40px', filter: logoFilter }} />
+                    </Link>
 
-                {/* DESKTOP Nav Links - Hidden on Mobile */}
-                <ul className="nav-links desktop-only" style={{
-                    display: 'flex', gap: '2.5rem', fontWeight: '500', margin: 0,
-                    listStyle: 'none'
-                }}>
-                    <style>{`
-                        @media (max-width: 768px) {
-                            .desktop-only { display: none !important; }
-                        }
-                    `}</style>
-                    {['Home', 'Shop', 'About', 'Reviews'].map((item) => (
-                        <li key={item}>
-                            <Link to={item === 'Shop' ? '/product' : '/'}
-                                style={{ position: 'relative', opacity: 0.9, fontSize: '0.95rem' }}
-                                onClick={() => window.scrollTo(0, 0)}
-                                onMouseEnter={(e) => e.target.style.opacity = '1'}
-                                onMouseLeave={(e) => e.target.style.opacity = '0.9'}
-                            >
-                                {item}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                    {/* DESKTOP Nav Links - Only visible on > 768px */}
+                    <ul className="nav-links desktop-only" style={{ display: 'flex', gap: '2.5rem', fontWeight: '500', margin: 0, listStyle: 'none' }}>
+                        <style>{`@media (max-width: 768px) { .desktop-only { display: none !important; } }`}</style>
+                        {['Home', 'Shop', 'About', 'Reviews'].map((item) => (
+                            <li key={item}>
+                                <Link to={item === 'Shop' ? '/product' : '/'}
+                                    style={{ position: 'relative', opacity: 0.9, fontSize: '0.95rem' }}
+                                    onClick={() => window.scrollTo(0, 0)}
+                                    onMouseEnter={(e) => e.target.style.opacity = '1'}
+                                    onMouseLeave={(e) => e.target.style.opacity = '0.9'}
+                                >
+                                    {item}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
 
-                {/* Right Actions */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', zIndex: 1100 }}>
-                    {/* Search Bar - Hidden on Mobile to save space */}
-                    <div className="desktop-only" style={{
-                        position: 'relative', display: 'flex', alignItems: 'center',
-                        background: searchBg, borderRadius: '20px', padding: '6px 16px'
-                    }}>
-                        <input type="text" placeholder="Search..."
-                            style={{ background: 'transparent', border: 'none', color: 'inherit', fontSize: '0.9rem', width: '120px', outline: 'none' }}
-                        />
-                        <SearchIcon />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', zIndex: 1100 }}>
+                        <div className="desktop-only" style={{ position: 'relative', display: 'flex', alignItems: 'center', background: searchBg, borderRadius: '20px', padding: '6px 16px' }}>
+                            <input type="text" placeholder="Search..." style={{ background: 'transparent', border: 'none', color: 'inherit', fontSize: '0.9rem', width: '120px', outline: 'none' }} />
+                            <SearchIcon />
+                        </div>
+                        <button onClick={toggleTheme} style={{ color: 'inherit', display: 'flex' }}>
+                            {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+                        </button>
+                        <button onClick={onCartClick} style={{ position: 'relative', color: 'inherit', display: 'flex' }}>
+                            <CartIcon />
+                            <span style={{ position: 'absolute', top: '-8px', right: '-8px', backgroundColor: 'var(--coral)', color: '#fff', fontSize: '0.7rem', fontWeight: 'bold', height: '18px', width: '18px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                {cartCount}
+                            </span>
+                        </button>
+                        <button className="mobile-only" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} style={{ display: 'none', color: textColor, zIndex: 1101, cursor: 'pointer' }}>
+                            <style>{`@media (max-width: 768px) { .mobile-only { display: flex !important; } }`}</style>
+                            {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
+                        </button>
                     </div>
-
-                    {/* Theme Toggle */}
-                    <button onClick={toggleTheme} style={{ color: 'inherit', display: 'flex' }}>
-                        {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
-                    </button>
-
-                    {/* Cart */}
-                    <button onClick={onCartClick} style={{ position: 'relative', color: 'inherit', display: 'flex' }}>
-                        <CartIcon />
-                        <span style={{
-                            position: 'absolute', top: '-8px', right: '-8px',
-                            backgroundColor: 'var(--coral)', color: '#fff', fontSize: '0.7rem',
-                            fontWeight: 'bold', height: '18px', width: '18px', borderRadius: '50%',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                        }}>
-                            {cartCount}
-                        </span>
-                    </button>
-
-                    {/* Mobile Menu Toggle */}
-                    <button className="mobile-only" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} style={{ display: 'none' }}>
-                        <style>{`
-                            @media (max-width: 768px) {
-                                .mobile-only { display: flex !important; }
-                            }
-                        `}</style>
-                        {isMobileMenuOpen ? <XIcon /> : <MenuIcon />}
-                    </button>
                 </div>
-            </div>
+            </nav>
 
-            {/* Mobile Menu Overlay */}
-            <AnimatePresence>
-                {isMobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.2 }}
-                        style={{
-                            position: 'fixed',
-                            top: 0, left: 0, right: 0, bottom: 0,
-                            backgroundColor: theme === 'dark' ? 'rgba(5, 26, 59, 0.98)' : 'rgba(255, 255, 255, 0.98)',
-                            zIndex: 1000, // Below logo/actions
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            paddingTop: '80px'
-                        }}
-                    >
-                        <ul style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', fontSize: '1.5rem', fontWeight: '600' }}>
-                            {['Home', 'Shop', 'About', 'Reviews'].map((item) => (
-                                <li key={item}>
-                                    <Link to={item === 'Shop' ? '/product' : '/'}
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        style={{ color: theme === 'dark' ? '#fff' : 'var(--ocean-deep)' }}
-                                    >
-                                        {item}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav >
+            {/* Mobile Menu Portal - Renders outside of nav/header context */}
+            {ReactDOM.createPortal(
+                <AnimatePresence>
+                    {isMobileMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            style={{
+                                position: 'fixed',
+                                top: 0, left: 0, right: 0, bottom: 0,
+                                backgroundColor: theme === 'dark' ? 'rgba(5, 26, 59, 0.98)' : '#FFFFFF', // High opacity background
+                                zIndex: 999, // Below the Header buttons (1000+) but above everything else
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingTop: '60px' // Offset mostly covered by header, but giving space
+                            }}
+                        >
+                            <ul style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', alignItems: 'center', fontSize: '1.8rem', fontWeight: 'bold', listStyle: 'none', padding: 0 }}>
+                                {['Home', 'Shop', 'About', 'Reviews'].map((item) => (
+                                    <li key={item}>
+                                        <Link to={item === 'Shop' ? '/product' : '/'}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            style={{ color: theme === 'dark' ? '#fff' : 'var(--ocean-deep)', textDecoration: 'none' }}
+                                        >
+                                            {item}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
+        </>
     );
 };
 
