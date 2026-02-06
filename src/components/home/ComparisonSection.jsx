@@ -1,10 +1,28 @@
 import React from 'react';
+import { useTheme } from '../layout/ThemeContext';
+
+import comparisonUmbrella from '../../assets/sombrilla.jpg';
+import comparisonPopup from '../../assets/pop-up-tents.png';
+import sunNinjaProduct from '../../assets/Sun-Ninja_4_person_tent_turquoise_4.png';
 
 const ComparisonSection = () => {
+    const { theme } = useTheme();
+
+    // Image styles for consistency
+    const imageStyle = {
+        width: '120px',
+        height: '120px',
+        objectFit: 'contain',
+        marginBottom: '20px',
+        filter: 'drop-shadow(0 10px 15px rgba(0,0,0,0.1))'
+    };
+
     return (
         <section style={{
             padding: '100px 0',
-            background: 'linear-gradient(180deg, var(--bg-main) 0%, var(--ocean-deep) 100%)',
+            background: theme === 'dark'
+                ? 'linear-gradient(180deg, var(--bg-main) 0%, var(--ocean-deep) 100%)'
+                : 'linear-gradient(180deg, #F5F7FA 0%, #E1F5FE 100%)',
             position: 'relative'
         }}>
             <div className="container">
@@ -23,19 +41,50 @@ const ComparisonSection = () => {
                     gap: '40px',
                     textAlign: 'center'
                 }}>
-                    {/* Competitor 1 */}
-                    <div className="glass-panel animate-fade-in-up delay-100" style={{ padding: '40px', borderRadius: '20px', opacity: 0.8 }}>
-                        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏖️</div>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: 'var(--text-primary)' }}>Traditional Umbrellas</h3>
-                        <ul style={{ textAlign: 'left', color: 'var(--text-secondary)', listStyle: 'none' }}>
-                            <li style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                                <span>❌</span> Blow away in wind
+                    {/* Competitor 1 - Traditional Umbrellas */}
+                    <div className="glass-panel animate-fade-in-up delay-100" style={{
+                        padding: '40px',
+                        borderRadius: '20px',
+                        background: theme === 'dark'
+                            ? 'rgba(255, 255, 255, 0.03)'
+                            : 'rgba(0, 0, 0, 0.03)',
+                        border: theme === 'dark'
+                            ? '1px solid rgba(255, 255, 255, 0.1)'
+                            : '1px solid rgba(0, 0, 0, 0.08)'
+                    }}>
+                        {/* Image Replacement */}
+                        <img src={comparisonUmbrella} alt="Traditional Umbrella" style={imageStyle} />
+
+                        <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: 'var(--text-primary)' }}>
+                            Traditional Umbrellas
+                        </h3>
+                        <ul style={{ textAlign: 'left', listStyle: 'none' }}>
+                            <li style={{
+                                marginBottom: '15px',
+                                display: 'flex',
+                                gap: '10px',
+                                color: theme === 'dark' ? '#94A3B8' : '#475569'
+                            }}>
+                                <span style={{ color: '#EF4444', fontSize: '1.2rem' }}>❌</span>
+                                <span style={{ fontSize: '1rem' }}>Blow away in wind</span>
                             </li>
-                            <li style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                                <span>❌</span> Limited coverage (2 people)
+                            <li style={{
+                                marginBottom: '15px',
+                                display: 'flex',
+                                gap: '10px',
+                                color: theme === 'dark' ? '#94A3B8' : '#475569'
+                            }}>
+                                <span style={{ color: '#EF4444', fontSize: '1.2rem' }}>❌</span>
+                                <span style={{ fontSize: '1rem' }}>Limited coverage (2 people)</span>
                             </li>
-                            <li style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                                <span>❌</span> Hard to anchor securely
+                            <li style={{
+                                marginBottom: '15px',
+                                display: 'flex',
+                                gap: '10px',
+                                color: theme === 'dark' ? '#94A3B8' : '#475569'
+                            }}>
+                                <span style={{ color: '#EF4444', fontSize: '1.2rem' }}>❌</span>
+                                <span style={{ fontSize: '1rem' }}>Hard to anchor securely</span>
                             </li>
                         </ul>
                     </div>
@@ -44,10 +93,12 @@ const ComparisonSection = () => {
                     <div className="glass-card animate-fade-in-up" style={{
                         padding: '40px',
                         borderRadius: '20px',
-                        border: '2px solid var(--turquoise)',
+                        border: `2px solid ${theme === 'dark' ? 'var(--turquoise)' : '#0891B2'}`,
                         position: 'relative',
                         transform: 'scale(1.05)',
-                        background: 'rgba(0, 217, 255, 0.05)',
+                        background: theme === 'dark'
+                            ? 'rgba(0, 217, 255, 0.05)'
+                            : 'rgba(8, 145, 178, 0.08)',
                         zIndex: 2
                     }}>
                         {/* Winner Badge */}
@@ -56,7 +107,7 @@ const ComparisonSection = () => {
                             top: '-15px',
                             left: '50%',
                             transform: 'translateX(-50%)',
-                            background: 'var(--gradient-gold)',
+                            background: 'linear-gradient(45deg, #FFD700 0%, #FFA500 100%)',
                             padding: '8px 20px',
                             borderRadius: '20px',
                             fontWeight: '800',
@@ -67,34 +118,106 @@ const ComparisonSection = () => {
                             👑 BEST CHOICE
                         </div>
 
-                        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>⛺</div>
-                        <h3 style={{ fontSize: '1.8rem', marginBottom: '15px', color: 'var(--turquoise)' }}>Sun Ninja</h3>
+                        {/* Image Replacement */}
+                        <img src={sunNinjaProduct} alt="Sun Ninja Tent" style={{
+                            ...imageStyle,
+                            transform: 'scale(1.2)' // Make hero product slightly larger
+                        }} />
+
+                        <h3 style={{
+                            fontSize: '1.8rem',
+                            marginBottom: '15px',
+                            color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2'
+                        }}>
+                            Sun Ninja
+                        </h3>
                         <ul style={{ textAlign: 'left', listStyle: 'none' }}>
-                            <li style={{ marginBottom: '15px', color: 'var(--text-primary)', display: 'flex', gap: '10px', fontSize: '1.1rem' }}>
-                                <span style={{ color: 'var(--turquoise)' }}>✓</span> Sand-anchored stability (30mph+)
+                            <li style={{
+                                marginBottom: '15px',
+                                color: 'var(--text-primary)',
+                                display: 'flex',
+                                gap: '10px',
+                                fontSize: '1.1rem'
+                            }}>
+                                <span style={{
+                                    color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2',
+                                    fontSize: '1.2rem'
+                                }}>✓</span>
+                                <span>Sand-anchored stability (30mph+)</span>
                             </li>
-                            <li style={{ marginBottom: '15px', color: 'var(--text-primary)', display: 'flex', gap: '10px', fontSize: '1.1rem' }}>
-                                <span style={{ color: 'var(--turquoise)' }}>✓</span> UPF 50+ protection (Whole Family)
+                            <li style={{
+                                marginBottom: '15px',
+                                color: 'var(--text-primary)',
+                                display: 'flex',
+                                gap: '10px',
+                                fontSize: '1.1rem'
+                            }}>
+                                <span style={{
+                                    color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2',
+                                    fontSize: '1.2rem'
+                                }}>✓</span>
+                                <span>UPF 50+ protection (Whole Family)</span>
                             </li>
-                            <li style={{ marginBottom: '15px', color: 'var(--text-primary)', display: 'flex', gap: '10px', fontSize: '1.1rem' }}>
-                                <span style={{ color: 'var(--turquoise)' }}>✓</span> 60-second easy setup
+                            <li style={{
+                                marginBottom: '15px',
+                                color: 'var(--text-primary)',
+                                display: 'flex',
+                                gap: '10px',
+                                fontSize: '1.1rem'
+                            }}>
+                                <span style={{
+                                    color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2',
+                                    fontSize: '1.2rem'
+                                }}>✓</span>
+                                <span>60-second easy setup</span>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Competitor 2 */}
-                    <div className="glass-panel animate-fade-in-up delay-200" style={{ padding: '40px', borderRadius: '20px', opacity: 0.8 }}>
-                        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>🏕️</div>
-                        <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: 'var(--text-primary)' }}>Pop-up Tents</h3>
-                        <ul style={{ textAlign: 'left', color: 'var(--text-secondary)', listStyle: 'none' }}>
-                            <li style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                                <span>❌</span> Heavy & bulky to carry
+                    {/* Competitor 2 - Pop-up Tents */}
+                    <div className="glass-panel animate-fade-in-up delay-200" style={{
+                        padding: '40px',
+                        borderRadius: '20px',
+                        background: theme === 'dark'
+                            ? 'rgba(255, 255, 255, 0.03)'
+                            : 'rgba(0, 0, 0, 0.03)',
+                        border: theme === 'dark'
+                            ? '1px solid rgba(255, 255, 255, 0.1)'
+                            : '1px solid rgba(0, 0, 0, 0.08)'
+                    }}>
+                        {/* Image Replacement */}
+                        <img src={comparisonPopup} alt="Pop-up Tent" style={imageStyle} />
+
+                        <h3 style={{ fontSize: '1.5rem', marginBottom: '15px', color: 'var(--text-primary)' }}>
+                            Pop-up Tents
+                        </h3>
+                        <ul style={{ textAlign: 'left', listStyle: 'none' }}>
+                            <li style={{
+                                marginBottom: '15px',
+                                display: 'flex',
+                                gap: '10px',
+                                color: theme === 'dark' ? '#94A3B8' : '#475569'
+                            }}>
+                                <span style={{ color: '#EF4444', fontSize: '1.2rem' }}>❌</span>
+                                <span style={{ fontSize: '1rem' }}>Heavy & bulky to carry</span>
                             </li>
-                            <li style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                                <span>❌</span> Complicated to fold back
+                            <li style={{
+                                marginBottom: '15px',
+                                display: 'flex',
+                                gap: '10px',
+                                color: theme === 'dark' ? '#94A3B8' : '#475569'
+                            }}>
+                                <span style={{ color: '#EF4444', fontSize: '1.2rem' }}>❌</span>
+                                <span style={{ fontSize: '1rem' }}>Complicated to fold back</span>
                             </li>
-                            <li style={{ marginBottom: '15px', display: 'flex', gap: '10px' }}>
-                                <span>❌</span> Poor ventilation (Hot)
+                            <li style={{
+                                marginBottom: '15px',
+                                display: 'flex',
+                                gap: '10px',
+                                color: theme === 'dark' ? '#94A3B8' : '#475569'
+                            }}>
+                                <span style={{ color: '#EF4444', fontSize: '1.2rem' }}>❌</span>
+                                <span style={{ fontSize: '1rem' }}>Poor ventilation (Hot)</span>
                             </li>
                         </ul>
                     </div>

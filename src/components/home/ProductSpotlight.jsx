@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTheme } from '../layout/ThemeContext';
 
 const ProductSpotlight = ({ title, subtitle, description, image, reverse, features, price, badge }) => {
+    const { theme } = useTheme();
     return (
         <section style={{ padding: '100px 0', position: 'relative' }}>
             {/* Ambient Background Glow */}
@@ -66,15 +68,15 @@ const ProductSpotlight = ({ title, subtitle, description, image, reverse, featur
                     {features && (
                         <ul style={{ marginBottom: '3rem', display: 'grid', gap: '1.2rem' }}>
                             <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: 'var(--text-secondary)' }}>
-                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0, 217, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--turquoise)' }}>✓</div>
+                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: theme === 'dark' ? 'rgba(0, 217, 255, 0.1)' : 'rgba(8, 145, 178, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2' }}>✓</div>
                                 UPF 50+ Sun Protection
                             </li>
                             <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: 'var(--text-secondary)' }}>
-                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0, 217, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--turquoise)' }}>✓</div>
+                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: theme === 'dark' ? 'rgba(0, 217, 255, 0.1)' : 'rgba(8, 145, 178, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2' }}>✓</div>
                                 Sand Anchor System (Wind Proof)
                             </li>
                             <li style={{ display: 'flex', alignItems: 'center', gap: '15px', fontWeight: '500', color: 'var(--text-secondary)' }}>
-                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(0, 217, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--turquoise)' }}>✓</div>
+                                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: theme === 'dark' ? 'rgba(0, 217, 255, 0.1)' : 'rgba(8, 145, 178, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: theme === 'dark' ? 'var(--turquoise)' : '#0891B2' }}>✓</div>
                                 Lightweight & Portable
                             </li>
                         </ul>

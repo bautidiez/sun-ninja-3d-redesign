@@ -1,16 +1,39 @@
-# React + Vite
+# ☀️ Sun Ninja Premium Redesign
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance redesign for the Sun Ninja brand, focused on immersive User Experience (UX) and Conversion Rate Optimization (CRO).
 
-Currently, two official plugins are available:
+## 🚀 Technology Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+*   **Core:** React 19 + Vite (Ultra-fast build)
+*   **Styling:** Modern CSS3 with Variables (Responsive, Clean Code, no heavy UI libraries)
+*   **Animations:** Framer Motion (Fluid state transitions)
+*   **Routing:** React Router v7
 
-## React Compiler
+## ✨ Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1.  **Cinematic Hero:** Optimized video background with contrast overlay for immediate impact.
+2.  **CRO Architecture:** Strategically integrated Trust Bars, social proof, and urgency elements.
+3.  **Premium Interactivity:**
+    *   Dynamic product gallery.
+    *   Interactive "Setup in 60 seconds" timeline.
+    *   Drawer-style Shopping Cart (seamless state management).
+4.  **Performance First:**
+    *   Removed heavy 3D libraries in favor of optimized assets.
+    *   Lazy loading concepts and clean code architecture.
 
-## Expanding the ESLint configuration
+## 🛠️ Installation & Usage
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+2.  Run development server:
+    ```bash
+    npm run dev
+    ```
+
+3.  Build for production:
+    ```bash
+    npm run build
+    ```

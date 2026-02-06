@@ -1,8 +1,8 @@
 import React from 'react';
 import tent1 from '../../assets/product-tent-1.jpg';
-import backpack from '../../assets/showcase-backpack.jpg';
+import backpack from '../../assets/showcase-backpack.webp';
 import tent2 from '../../assets/showcase-tent-2.jpg';
-import heroImg from '../../assets/hero-image.jpg';
+import heroImg from '../../assets/hero-image.webp';
 
 const VersatilityGrid = () => {
     const items = [

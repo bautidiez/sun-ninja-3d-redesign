@@ -61,6 +61,24 @@
   --color-primary: var(--ocean-main);
   --color-secondary: var(--coral);
   --color-bg-section: var(--bg-surface);
+
+  /* New Theme Variables */
+  /* Input Fields */
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --input-text: #ffffff;
+  --input-placeholder: rgba(255, 255, 255, 0.6);
+  --input-border: rgba(255, 255, 255, 0.2);
+
+  /* Sections */
+  --newsletter-bg: var(--ocean-deep);
+  --newsletter-text: #ffffff;
+  --footer-bg: var(--ocean-deep);
+  --footer-text: #ffffff;
+
+  /* Glass Morphism */
+  --glass-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  --glass-card-border: 1px solid rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
 [data-theme="light"] {
@@ -77,16 +95,36 @@
   /* Slate 600 */
 
   --glass-border: 1px solid rgba(148, 163, 184, 0.2);
-  --shadow-sm: 0 2px 4px rgba(148, 163, 184, 0.1);
-  --shadow-float: 0 20px 40px -5px rgba(148, 163, 184, 0.15);
-  /* Soft, luxurious shadow */
-  --shadow-neon: 0 0 15px rgba(8, 145, 178, 0.3);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-float: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 15px rgba(8, 145, 178, 0.1);
+  /* Added soft teal glow to light mode float shadow to match user request */
+  --shadow-neon: 0 0 15px rgba(8, 145, 178, 0.4);
 
+  /* Refined Accents */
   /* Refined Accents */
   --turquoise: #0891B2;
   /* Cyan 600 - Richer Teal */
   --coral: #EA580C;
   /* Orange 600 - Burnt Orange Classy Accent */
+
+  /* Light Mode Overrides */
+  /* Input Fields */
+  --input-bg: rgba(0, 0, 0, 0.05);
+  --input-text: var(--text-primary);
+  --input-placeholder: rgba(0, 0, 0, 0.5);
+  --input-border: rgba(0, 0, 0, 0.1);
+
+  /* Sections */
+  --newsletter-bg: var(--ocean-main);
+  --newsletter-text: #ffffff;
+  --footer-bg: #1E293B;
+  /* Specific dark footer for light mode contrast */
+  --footer-text: #ffffff;
+
+  /* Glass Morphism */
+  --glass-bg: linear-gradient(145deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.01) 100%);
+  --glass-card-border: 1px solid rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -147,12 +185,24 @@ button {
 }
 
 .glass-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  border: var(--glass-card-border);
+  box-shadow: var(--glass-shadow);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Placeholder Styles */
+input::placeholder,
+textarea::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
+}
+
+.search-input::placeholder {
+  color: inherit;
+  opacity: 0.7;
 }
 
 .glass-card:hover {
@@ -260,4 +310,21 @@ button {
 
 .delay-300 {
   animation-delay: 0.3s;
+}
+
+/* Newsletter Input Placeholder - CRÍTICO */
+input[type="email"]::placeholder {
+  color: #94A3B8;
+  /* Gris medio visible */
+  opacity: 1;
+}
+
+input[type="email"]::-webkit-input-placeholder {
+  color: #94A3B8;
+  opacity: 1;
+}
+
+input[type="email"]::-moz-placeholder {
+  color: #94A3B8;
+  opacity: 1;
 }

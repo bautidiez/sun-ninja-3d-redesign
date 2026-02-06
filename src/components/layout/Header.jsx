@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from './ThemeContext';
 import logo from '../../assets/Sun_Ninja_Logo_White.svg';
 
-const Header = () => {
+const Header = ({ cartCount, onCartClick }) => {
     const { theme, toggleTheme } = useTheme();
     const [isScrolled, setIsScrolled] = useState(false);
-    const [cartCount, setCartCount] = useState(0); // Demo state
+    // Local state removed, using prop now
+    const location = useLocation();
+    const isHome = location.pathname === '/';
 
     useEffect(() => {
         const handleScroll = () => {
@@ -15,6 +17,31 @@ const Header = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Helper to determine styles based on Theme + Route + Scroll
+    const isLightMode = theme === 'light';
+
+    // Text Color: Dark if Light Mode AND (Scrolled OR Not Home)
+    // Meaning: On Home Top it's White (Video). On Product Top it's Dark (Light BG).
+    // In Dark Mode: Always White.
+    const textColor = isLightMode && (isScrolled || !isHome)
+        ? 'var(--text-primary)'
+        : '#fff';
+
+    // Logo Filter: Invert if text is dark
+    const logoFilter = isLightMode && (isScrolled || !isHome)
+        ? 'invert(1) brightness(0.5)'
+        : 'none';
+
+    // Search Background: Darker if text is dark, Lighter if text is white
+    const searchBg = isLightMode && (isScrolled || !isHome)
+        ? 'rgba(0,0,0,0.05)'
+        : 'rgba(255,255,255,0.1)';
+
+    // Nav Background: White if Light Mode & Scrolled. Dark if Dark Mode & Scrolled. Transparent otherwise.
+    const navBg = isScrolled
+        ? (isLightMode ? 'rgba(255, 255, 255, 0.95)' : 'rgba(10, 36, 99, 0.95)')
+        : 'transparent';
 
     // Inline SVG Icons
     const SearchIcon = () => (
@@ -68,19 +95,17 @@ const Header = () => {
             zIndex: 1000,
             padding: '1rem 0',
             transition: 'all 0.3s ease',
-            backgroundColor: isScrolled
-                ? (theme === 'dark' ? 'rgba(10, 36, 99, 0.95)' : 'rgba(255, 255, 255, 0.95)')
-                : 'transparent',
+            backgroundColor: navBg,
             backdropFilter: isScrolled ? 'blur(10px)' : 'none',
             boxShadow: isScrolled ? 'var(--shadow-sm)' : 'none',
-            color: isScrolled && theme === 'light' ? 'var(--text-primary)' : '#fff'
+            color: textColor
         }}>
             <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 {/* Logo */}
                 <Link to="/" className="logo" style={{ display: 'flex', alignItems: 'center' }}>
                     <img src={logo} alt="Sun Ninja" style={{
                         height: '40px',
-                        filter: isScrolled && theme === 'light' ? 'invert(1) brightness(0.5)' : 'none'
+                        filter: logoFilter
                     }} />
                 </Link>
 
@@ -99,6 +124,7 @@ const Header = () => {
                                     opacity: 0.9,
                                     fontSize: '0.95rem'
                                 }}
+                                onClick={() => window.scrollTo(0, 0)}
                                 onMouseEnter={(e) => e.target.style.opacity = '1'}
                                 onMouseLeave={(e) => e.target.style.opacity = '0.9'}
                             >
@@ -115,21 +141,21 @@ const Header = () => {
                         position: 'relative',
                         display: 'flex',
                         alignItems: 'center',
-                        background: isScrolled && theme === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.1)',
+                        background: searchBg,
                         borderRadius: '20px',
                         padding: '6px 16px'
                     }}>
                         <input
                             type="text"
                             placeholder="Search..."
+                            className="search-input"
                             style={{
                                 background: 'transparent',
                                 border: 'none',
                                 color: 'inherit',
                                 fontSize: '0.9rem',
                                 width: '120px',
-                                outline: 'none',
-                                '::placeholder': { color: 'rgba(255,255,255,0.7)' }
+                                outline: 'none'
                             }}
                         />
                         <SearchIcon />
@@ -157,11 +183,12 @@ const Header = () => {
                     </button>
 
                     {/* Cart */}
-                    <button style={{
+                    <button onClick={onCartClick} style={{
                         position: 'relative',
                         color: 'inherit',
                         display: 'flex',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        cursor: 'pointer'
                     }}>
                         <CartIcon />
                         <span style={{
@@ -184,7 +211,7 @@ const Header = () => {
                     </button>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 };
 

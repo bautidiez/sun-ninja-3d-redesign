@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTheme } from '../layout/ThemeContext';
 
 const FAQAccordion = () => {
+    const { theme } = useTheme();
     const [openIndex, setOpenIndex] = useState(0);
 
     const faqs = [
@@ -96,14 +98,23 @@ const FAQAccordion = () => {
                     textAlign: 'center',
                     marginTop: '60px',
                     padding: '40px',
-                    background: 'rgba(0, 217, 255, 0.05)',
+                    background: theme === 'dark'
+                        ? 'rgba(0, 217, 255, 0.05)'
+                        : 'rgba(8, 145, 178, 0.08)',
                     borderRadius: '20px',
-                    border: '1px solid rgba(0, 217, 255, 0.2)'
+                    border: theme === 'dark'
+                        ? '1px solid rgba(0, 217, 255, 0.2)'
+                        : '1px solid rgba(8, 145, 178, 0.2)'
                 }}>
                     <p style={{ fontSize: '1.1rem', marginBottom: '20px', color: 'var(--text-primary)' }}>
                         Still have questions?
                     </p>
-                    <button className="btn-glass">
+                    <button
+                        className="btn-primary"
+                        style={{
+                            padding: '14px 30px'
+                        }}
+                    >
                         Chat with our team
                     </button>
                 </div>

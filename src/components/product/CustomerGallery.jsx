@@ -1,87 +1,113 @@
-import React from 'react';
-import cust1 from '../../assets/showcase-shower-1.jpg';
-import cust2 from '../../assets/showcase-shower-2.jpg';
-import cust3 from '../../assets/showcase-shower-3.jpg';
-import cust4 from '../../assets/showcase-winter.jpg';
-import cust5 from '../../assets/product-tent-4.jpg'; // Using product shot as fallback
-import cust6 from '../../assets/showcase-tent-1.jpg';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import AnimatedCounter from '../common/AnimatedCounter';
+
+// Import local assets
+import cust1 from '../../assets/product-tent-1.jpg';
+import cust2 from '../../assets/product-tent-2.jpg';
+import cust3 from '../../assets/product-tent-3.jpg';
+import cust4 from '../../assets/product-tent-4.jpg';
+import cust5 from '../../assets/showcase-shower-1.jpg';
+import cust6 from '../../assets/showcase-tent-1.webp';
 
 const CustomerGallery = () => {
-    // Social Proof - Real Customer Photos
-    return (
-        <section style={{ padding: '100px 0', background: 'var(--ocean-deep)' }}>
-            <div className="container">
-                <h2 className="animate-fade-in-up" style={{
-                    textAlign: 'center',
-                    fontSize: '3rem',
-                    marginBottom: '60px',
-                    color: 'var(--text-primary)'
-                }}>
-                    Real Customers. Real Stories.
-                </h2>
+    // Generate 5 items as requested
+    const originalImages = [cust1, cust2, cust3, cust4, cust5, cust6]; // limiting to 5 unique if possible, or cycling
+    const galleryItems = Array.from({ length: 5 }, (_, i) => ({
+        id: i,
+        image: originalImages[i % originalImages.length],
+        username: `@sunlover_${i + 1}`,
+        location: ['Miami, FL', 'Sydney, AU', 'Malibu, CA', 'Cancun, MX', 'Gold Coast'][i % 5],
+        likes: 120 + i * 15
+    }));
 
-                {/* Masonry-style grid of customer photos */}
+    return (
+        <section style={{ padding: '80px 0', background: 'var(--bg-main)', overflow: 'hidden' }}>
+            <div className="container">
+                {/* Header with Animated Number */}
+                <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+                    <h2 className="animate-fade-in-up" style={{
+                        fontSize: 'clamp(2rem, 4vw, 3rem)',
+                        color: 'var(--text-primary)',
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        justifyContent: 'center',
+                        alignItems: 'baseline',
+                        gap: '10px'
+                    }}>
+                        {/* Force white color for the number specifically */}
+                        <div style={{ display: 'inline-block', width: '180px' }}>
+                            <AnimatedCounter value={9427} duration={2500} color="#FFFFFF" />
+                        </div>
+                        <span style={{ color: 'var(--text-primary)' }}>beach days saved</span>
+                    </h2>
+                    <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)' }}>and counting...</p>
+                </div>
+
+                {/* 5-Column Grid */}
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '20px',
+                    // Using auto-fit to center them or specific repeat(5, 1fr) if we want a strip.
+                    // Given "5 photos nomas", a single strips looks nice, but responsiveness is key.
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '10px',
                     marginBottom: '60px'
                 }}>
-                    {[
-                        cust1, cust2, cust3, cust4, cust5, cust6
-                    ].map((img, i) => (
-                        <div key={i} className="glass-card animate-fade-in-up" style={{
-                            borderRadius: '20px',
-                            overflow: 'hidden',
-                            height: i % 2 === 0 ? '350px' : '280px',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            animationDelay: `${i * 0.1}s`
-                        }}>
-                            <img src={img} alt={`Customer ${i}`} style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover'
-                            }} />
-
-                            {/* Hover overlay con review */}
-                            <div style={{
-                                position: 'absolute',
-                                inset: 0,
-                                background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)',
-                                opacity: 0,
-                                transition: 'opacity 0.3s ease',
-                                padding: '20px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'flex-end'
+                    {galleryItems.map((item, i) => (
+                        <motion.div
+                            key={item.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.05 }}
+                            style={{
+                                position: 'relative',
+                                aspectRatio: '1/1',
+                                overflow: 'hidden',
+                                cursor: 'pointer',
+                                borderRadius: '16px', // Adding slight radius for aesthetics
+                                boxShadow: 'var(--shadow-lg)' // Added shadow for effect matching dark mode depth
                             }}
-                                onMouseEnter={(e) => e.currentTarget.style.opacity = 1}
-                                onMouseLeave={(e) => e.currentTarget.style.opacity = 0}
+                            className="group"
+                        >
+                            <img
+                                src={item.image}
+                                alt={`Customer ${item.username}`}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                    transition: 'transform 0.5s ease'
+                                }}
+                            />
+
+                            {/* Hover Overlay */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                whileHover={{ opacity: 1 }}
+                                style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    background: 'rgba(0,0,0,0.4)', // 40% black overlay
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    color: 'white'
+                                }}
                             >
-                                <div style={{ color: '#FFD700', marginBottom: '10px' }}>★★★★★</div>
-                                <p style={{ fontSize: '0.9rem', fontStyle: 'italic', color: '#fff' }}>
-                                    "Best beach purchase ever! Saved our vacation."
-                                </p>
-                                <p style={{ fontSize: '0.85rem', marginTop: '5px', color: 'var(--turquoise)' }}>
-                                    - Verified Buyer
-                                </p>
-                            </div>
-                        </div>
+                                <div style={{ fontSize: '3rem', marginBottom: '10px' }}>♥</div>
+                                <div style={{ fontWeight: '700' }}>{item.username}</div>
+                                <div style={{ fontSize: '0.8rem', opacity: 0.8 }}>📍 {item.location}</div>
+                            </motion.div>
+                        </motion.div>
                     ))}
                 </div>
 
-                {/* Instagram-style caption */}
-                <div className="animate-fade-in-up delay-200" style={{ textAlign: 'center' }}>
-                    <p style={{
-                        fontSize: '1.1rem',
-                        color: 'var(--text-secondary)',
-                        marginBottom: '20px'
-                    }}>
-                        Tag us @sunninja for a chance to be featured
-                    </p>
-                    <button className="btn-glass">
-                        View All 9,200+ Reviews
+                <div style={{ textAlign: 'center' }}>
+                    {/* Changed to btn-primary to ensure visibility in light mode since btn-glass might be too subtle on white */}
+                    <button className="btn-primary" style={{ fontSize: '1.2rem', padding: '15px 40px' }}>
+                        See All Customer Photos →
                     </button>
                 </div>
             </div>
