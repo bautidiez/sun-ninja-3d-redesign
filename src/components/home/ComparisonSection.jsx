@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../layout/ThemeContext';
 
-import comparisonUmbrella from '../../assets/sombrilla.jpg';
+import comparisonUmbrella from '../../assets/sombrilla.png';
 import comparisonPopup from '../../assets/pop-up-tents.png';
 import sunNinjaProduct from '../../assets/Sun-Ninja_4_person_tent_turquoise_4.png';
 
