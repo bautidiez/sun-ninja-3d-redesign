@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../layout/ThemeContext';
 import AnimatedCounter from '../common/AnimatedCounter';
 
 // Import local assets
@@ -11,6 +12,7 @@ import cust5 from '../../assets/showcase-shower-1.jpg';
 import cust6 from '../../assets/showcase-tent-1.webp';
 
 const CustomerGallery = () => {
+    const { theme } = useTheme();
     // Generate 5 items as requested
     const originalImages = [cust1, cust2, cust3, cust4, cust5, cust6]; // limiting to 5 unique if possible, or cycling
     const galleryItems = Array.from({ length: 5 }, (_, i) => ({
@@ -35,9 +37,13 @@ const CustomerGallery = () => {
                         alignItems: 'baseline',
                         gap: '10px'
                     }}>
-                        {/* Force white color for the number specifically */}
+                        {/* Conditional color: White for dark mode, Text Primary for light mode */}
                         <div style={{ display: 'inline-block', width: '180px' }}>
-                            <AnimatedCounter value={9427} duration={2500} color="#FFFFFF" />
+                            <AnimatedCounter
+                                value={9427}
+                                duration={2500}
+                                color={theme === 'dark' ? '#FFFFFF' : 'var(--text-primary)'}
+                            />
                         </div>
                         <span style={{ color: 'var(--text-primary)' }}>beach days saved</span>
                     </h2>
